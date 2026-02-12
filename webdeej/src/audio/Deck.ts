@@ -61,4 +61,9 @@ export class Deck {
             this.play();
         }
     }
+    getCurrentTime() {
+        if (!this.isPlaying) return this.offset;
+        const elapsed = this.context.currentTime - this.startTime;
+        return Math.min(this.offset + elapsed, this.buffer?.duration || 0);
+    }
 }
