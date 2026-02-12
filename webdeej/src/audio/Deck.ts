@@ -33,7 +33,14 @@ export class Deck {
     }
     
     stop(){
+        if (!this.isPlaying) return;
+
         this.source?.stop();
+
+        const elapsed = this.context.currentTime - this.startTime;
+        this.offset += elapsed;
+
+        this.isPlaying = false;
     }
 
     setVolume(value: number) {
