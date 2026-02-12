@@ -46,4 +46,19 @@ export class Deck {
     setVolume(value: number) {
         this.gainNode.gain.value = value;
     }
+
+    seek(time: number) {
+        if (!this.buffer) return;
+
+        const wasPlaying = this.isPlaying;
+
+        if (wasPlaying) {
+            this.stop();
+        }
+        this.offset = Math.min(Math.max(0, time), this.buffer.duration);
+
+        if (wasPlaying) {
+            this.play();
+        }
+    }
 }
