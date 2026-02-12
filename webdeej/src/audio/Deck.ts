@@ -27,7 +27,7 @@ export class Deck {
         this.source.connect(this.gainNode);
         
         this.startTime = this.context.currentTime;
-        this.source.start(0, this.offset);
+        this.source.start(this.context.currentTime + 0.03, this.offset);
 
         this.isPlaying = true;
     }
