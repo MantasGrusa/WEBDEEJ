@@ -14,15 +14,13 @@ export default function App() {
     await deckRef.current.loadFile(file);
     deckRef.current.play();
   }
-  const startAudio = async () => {
-    const audioEngine = AudioEngine.getInstance();
-    await audioEngine.resume();
-    console.log("Audio ready: ", audioEngine.context.state);
-  };
 
-  return <div>
-    <input type="file" accept="audio/*" onChange={handleFileChange} />
-    <button onClick={() => deckRef.current.play()}>Play</button>
-    <button onClick={() => deckRef.current.stop()}>Stop</button>
-  </div>>
+
+  return (
+    <div>
+      <input type="file" accept="audio/*" onChange={handleFileChange} />
+      <button onClick={() => deckRef.current.play()}>Play</button>
+      <button onClick={() => deckRef.current.stop()}>Stop</button>
+    </div>  
+  );
 }

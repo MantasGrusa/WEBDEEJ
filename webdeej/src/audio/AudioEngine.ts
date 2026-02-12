@@ -1,9 +1,14 @@
 export class AudioEngine {
     private static instance: AudioEngine;
     private audioContext: AudioContext;
-
+    private MasterGain: GainNode;
+    
     private constructor() {
         this.audioContext = new AudioContext();
+        
+        //MasterGain is used to control the overall volume of the audio output
+        this.MasterGain = this.audioContext.createGain();
+        this.MasterGain.connect(this.audioContext.destination);
     }
     
     static getInstance(): AudioEngine {
