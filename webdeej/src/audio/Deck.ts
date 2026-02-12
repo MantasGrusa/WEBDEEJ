@@ -5,6 +5,9 @@ export class Deck {
     private buffer?: AudioBuffer;
     private source?: AudioBufferSourceNode;
     private gainNode: GainNode;
+    private startTime = 0;   // when playback began (context time)
+    private offset = 0;     // position inside the track
+    private isPlaying = false;
 
     constructor() {
         this.gainNode = this.context.createGain();
@@ -17,12 +20,16 @@ export class Deck {
     }
 
     play() {
-        if (!this.buffer) return;
+        if (!this.buffer || this.isPlaying) return;
         this.source = this.context.createBufferSource();
         this.source.buffer = this.buffer;
         
         this.source.connect(this.gainNode);
-        this.source.start();
+        
+        this.startTime = this.context.currentTime;
+        this.source.start(0, this.offset);
+
+        this.isPlaying = true;
     }
     
     stop(){
