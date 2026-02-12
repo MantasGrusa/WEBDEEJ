@@ -8,7 +8,7 @@ export class Deck {
 
     constructor() {
         this.gainNode = this.context.createGain();
-        this.gainNode.connect(this.context.destination);
+        this.gainNode.connect(AudioEngine.getInstance().master);
     }   
 
     async loadFile(file: File) {
