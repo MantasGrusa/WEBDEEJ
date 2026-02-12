@@ -11,6 +11,9 @@ export class AudioEngine {
         this.MasterGain.connect(this.audioContext.destination);
     }
     
+    get masterGain(): GainNode {
+        return this.MasterGain;
+    }
     static getInstance(): AudioEngine {
         if (!AudioEngine.instance) {
             AudioEngine.instance = new AudioEngine();
