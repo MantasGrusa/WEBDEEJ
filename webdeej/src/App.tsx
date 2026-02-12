@@ -21,6 +21,7 @@ export default function App() {
       <input type="file" accept="audio/*" onChange={handleFileChange} />
       <button onClick={() => deckRef.current.play()}>Play</button>
       <button onClick={() => deckRef.current.stop()}>Stop</button>
+      <input type="range" min="0" max="1" step="0.01" onChange={(e) => deckRef.current.setVolume(parseFloat(e.target.value))} />
     </div>  
   );
 }
