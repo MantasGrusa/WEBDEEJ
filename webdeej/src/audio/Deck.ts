@@ -8,17 +8,19 @@ export class Deck {
     private startTime = 0;   // when playback began (context time)
     private offset = 0;     // position inside the track
     private isPlaying = false;
+    private output: GainNode;
 
-    constructor() {
+    constructor(output: GainNode) {
+        this.output = output;
+
         this.gainNode = this.context.createGain();
-        this.gainNode.connect(AudioEngine.getInstance().master);
-    }   
-
+        this.gainNode.connect(this.output);
+    }
     async loadFile(file: File) {
         const arrayBuffer = await file.arrayBuffer();
         this.buffer = await this.context.decodeAudioData(arrayBuffer);
+        this.offset = 0; // reset position on new load
     }
-
     play() {
         if (!this.buffer || this.isPlaying) return;
         this.source = this.context.createBufferSource();
@@ -66,4 +68,6 @@ export class Deck {
         const elapsed = this.context.currentTime - this.startTime;
         return Math.min(this.offset + elapsed, this.buffer?.duration || 0);
     }
+    
+
 }

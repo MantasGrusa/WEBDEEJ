@@ -42,6 +42,17 @@ export class AudioEngine {
         return this.deckBBus;
     }
 
+    setCrossfader(value: number) {
+        // Clamp value between 0 and 1
+        const x = Math.min(Math.max(value, 0), 1);
+
+        const gainA = Math.cos(x * 0.5 * Math.PI);
+        const gainB = Math.cos((1 - x) * 0.5 * Math.PI);
+
+        this.deckABus.gain.value = gainA;
+        this.deckBBus.gain.value = gainB;
+}
+
     async resume(){
         if (this.audioContext.state === 'suspended') {
             await this.audioContext.resume();
