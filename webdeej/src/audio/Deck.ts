@@ -68,6 +68,9 @@ export class Deck {
         const elapsed = this.context.currentTime - this.startTime;
         return Math.min(this.offset + elapsed, this.buffer?.duration || 0);
     }
-    
+    getBuffer(){
+        return this.buffer;
+    }
+
 
 }
