@@ -2,34 +2,46 @@ import {useEffect, useRef} from "react";
 import { Deck } from "../audio/Deck";
 import { WaveformCanvas } from "../visuals/WaveformCanvas";
 
-interface props{
+interface Props{
     deck: Deck;
 }
 
-export default function WaveformView({deck}: props) {
-    const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const rendererRef = useRef<WaveformCanvas | null>(null);
+export default function WaveformView({ deck }: Props) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const rendererRef = useRef<WaveformCanvas | null>(null);
 
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        
-        const renderer = new WaveformCanvas(canvas, deck);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-        rendererRef.current = renderer;
-        rendererRef.current.drawStaticWaveform();
-        rendererRef.current.startPlaybackCursor();
+    const renderer = new WaveformCanvas(canvas, deck);
+    rendererRef.current = renderer;
 
-        return () => {
-            rendererRef.current?.stopPlaybackCursor();
-        };
-    }, [deck]);
-    return(
-        <canvas 
-            ref={canvasRef} 
-            width={600} 
-            height={150}
-            style= {{border: "1px solid grey"}} 
-        />
-    )
+    renderer.startPlaybackCursor();
+
+    return () => {
+      renderer.stopPlaybackCursor();
+    };
+  }, [deck]);
+
+  // NEW: expose a way to refresh after load
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (rendererRef.current && deck.getBuffer()) {
+        rendererRef.current.refreshWaveform();
+        clearInterval(interval);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [deck]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      width={600}
+      height={150}
+      style={{ border: "1px solid gray" }}
+    />
+  );
 }
