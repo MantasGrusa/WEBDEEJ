@@ -1,7 +1,11 @@
 export class AudioEngine {
     private static instance: AudioEngine;
     private audioContext: AudioContext;
+
     private MasterGain: GainNode;
+    private deckABus: GainNode;
+    private deckBBus: GainNode;
+
     
     private constructor() {
         this.audioContext = new AudioContext();
@@ -9,11 +13,15 @@ export class AudioEngine {
         //MasterGain is used to control the overall volume of the audio output
         this.MasterGain = this.audioContext.createGain();
         this.MasterGain.connect(this.audioContext.destination);
+
+        this.deckABus = this.audioContext.createGain();
+        this.deckBBus = this.audioContext.createGain();
+
+        this.deckABus.connect(this.MasterGain);
+        this.deckBBus.connect(this.MasterGain); 
     }
     
-    get master(): GainNode {
-        return this.MasterGain;
-    }
+    
     static getInstance(): AudioEngine {
         if (!AudioEngine.instance) {
             AudioEngine.instance = new AudioEngine();
@@ -23,6 +31,15 @@ export class AudioEngine {
 
     get context(): AudioContext {
         return this.audioContext;
+    }
+    get master(): GainNode {
+        return this.MasterGain;
+    }
+    get deckAInput(): GainNode {
+        return this.deckABus;
+    }
+    get deckBInput(): GainNode {
+        return this.deckBBus;
     }
 
     async resume(){
