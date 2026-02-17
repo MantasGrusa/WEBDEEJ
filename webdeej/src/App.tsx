@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Deck } from "./audio/Deck";
 import { AudioEngine } from "./audio/AudioEngine";
-
+import WaveformView from "./ui/WaveformView";
 
 
 export default function App() {
@@ -22,6 +22,8 @@ export default function App() {
   return (
     <div>
       <h2>Deck A</h2>
+      <WaveformView deck={deckARef.current} />
+
       <input
         type="file"
         accept="audio/*"
@@ -44,6 +46,7 @@ export default function App() {
       <hr />
 
       <h2>Deck B</h2>
+      <WaveformView deck={deckBRef.current} />
       <input
         type="file"
         accept="audio/*"
