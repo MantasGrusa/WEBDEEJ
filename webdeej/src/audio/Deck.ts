@@ -112,7 +112,7 @@ export class Deck {
     getCurrentTime() {
         if (!this.isPlaying) return this.offset;
         const elapsed = this.context.currentTime - this.startTime;
-        return Math.min(this.offset + elapsed, this.buffer?.duration || 0);
+        return this.offset + elapsed * this.playbackRate;
     }
     getBuffer(){
         return this.buffer;
