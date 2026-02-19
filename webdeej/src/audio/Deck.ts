@@ -9,11 +9,36 @@ export class Deck {
     private offset = 0;     // position inside the track
     private isPlaying = false;
     private output: GainNode;
+    private lowFilter: BiquadFilterNode;
+    private midFilter: BiquadFilterNode;
+    private highFilter: BiquadFilterNode;
+
 
     constructor(output: GainNode) {
         this.output = output;
 
         this.gainNode = this.context.createGain();
+
+        // Create filters
+        this.lowFilter = this.context.createBiquadFilter();
+        this.midFilter = this.context.createBiquadFilter();
+        this.highFilter = this.context.createBiquadFilter();
+
+        // Configure filters
+        this.lowFilter.type = "lowshelf";
+        this.lowFilter.frequency.value = 320;
+
+        this.midFilter.type = "peaking";
+        this.midFilter.frequency.value = 1000;
+        this.midFilter.Q.value = 1;
+
+        this.highFilter.type = "highshelf";
+        this.highFilter.frequency.value = 3200;
+
+        // Chain them
+        this.lowFilter.connect(this.midFilter);
+        this.midFilter.connect(this.highFilter);
+        this.highFilter.connect(this.gainNode);
         this.gainNode.connect(this.output);
     }
     async loadFile(file: File) {
