@@ -113,7 +113,7 @@ export default function App() {
           step="0.5"
           defaultValue="0"
           onChange={(e) =>
-            deckARef.current.setLow(Number(e.target.value))
+            deckBRef.current.setLow(Number(e.target.value))
           }
         />
 
@@ -125,7 +125,7 @@ export default function App() {
           step="0.5"
           defaultValue="0"
           onChange={(e) =>
-            deckARef.current.setMid(Number(e.target.value))
+            deckBRef.current.setMid(Number(e.target.value))
           }
         />
 
@@ -137,7 +137,7 @@ export default function App() {
           step="0.5"
           defaultValue="0"
           onChange={(e) =>
-            deckARef.current.setHigh(Number(e.target.value))
+            deckBRef.current.setHigh(Number(e.target.value))
           }
         />
       </div>
