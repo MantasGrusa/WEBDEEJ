@@ -51,7 +51,7 @@ export class Deck {
         this.source = this.context.createBufferSource();
         this.source.buffer = this.buffer;
         
-        this.source.connect(this.gainNode);
+        this.source.connect(this.lowFilter);
         
         this.startTime = this.context.currentTime;
         this.source.start(this.context.currentTime + 0.03, this.offset);
@@ -74,6 +74,17 @@ export class Deck {
         this.gainNode.gain.value = value;
     }
 
+    setLow(value: number) {
+        this.lowFilter.gain.value = value;
+    }
+
+    setMid(value: number) {
+        this.midFilter.gain.value = value;
+    }
+
+    setHigh(value: number) {
+        this.highFilter.gain.value = value;
+    }
     seek(time: number) {
         if (!this.buffer) return;
 
