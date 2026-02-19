@@ -12,6 +12,8 @@ export class Deck {
     private lowFilter: BiquadFilterNode;
     private midFilter: BiquadFilterNode;
     private highFilter: BiquadFilterNode;
+    private playbackRate = 1;
+
 
 
     constructor(output: GainNode) {
@@ -50,7 +52,8 @@ export class Deck {
         if (!this.buffer || this.isPlaying) return;
         this.source = this.context.createBufferSource();
         this.source.buffer = this.buffer;
-        
+        this.source.playbackRate.value = this.playbackRate;
+
         this.source.connect(this.lowFilter);
         
         this.startTime = this.context.currentTime;
@@ -84,6 +87,13 @@ export class Deck {
 
     setHigh(value: number) {
         this.highFilter.gain.value = value;
+    }
+    setPlaybackRate(rate: number) {
+        this.playbackRate = rate;
+
+        if (this.source) {
+            this.source.playbackRate.value = rate;
+        }
     }
     seek(time: number) {
         if (!this.buffer) return;
