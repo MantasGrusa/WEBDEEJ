@@ -154,6 +154,10 @@ export default function App() {
           engine.setCrossfader(parseFloat(e.target.value))
         }
       />
+
+      <button onClick={() => deckBRef.current.syncTo(deckARef.current)}>
+        Sync B to A
+      </button>
     </div>
   );
 }
