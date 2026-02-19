@@ -118,5 +118,14 @@ export class Deck {
         return this.buffer;
     }
 
+    syncTo(target: Deck) {
+        const targetTime = target.getCurrentTime();
+        const myTime = this.getCurrentTime();
+
+        const difference = targetTime - myTime;
+
+        this.seek(myTime + difference);
+        this.setPlaybackRate(target.playbackRate);
+    }
 
 }
