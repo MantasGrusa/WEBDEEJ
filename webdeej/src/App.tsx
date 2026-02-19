@@ -43,6 +43,44 @@ export default function App() {
       />
       <button onClick={() => deckARef.current.seek(0)}>Restart</button>
 
+      <div>
+        <label>Low</label>
+        <input
+          type="range"
+          min="-30"
+          max="10"
+          step="0.5"
+          defaultValue="0"
+          onChange={(e) =>
+            deckARef.current.setLow(Number(e.target.value))
+          }
+        />
+
+        <label>Mid</label>
+        <input
+          type="range"
+          min="-30"
+          max="10"
+          step="0.5"
+          defaultValue="0"
+          onChange={(e) =>
+            deckARef.current.setMid(Number(e.target.value))
+          }
+        />
+
+        <label>High</label>
+        <input
+          type="range"
+          min="-30"
+          max="10"
+          step="0.5"
+          defaultValue="0"
+          onChange={(e) =>
+            deckARef.current.setHigh(Number(e.target.value))
+          }
+        />
+      </div>
+
       <hr />
 
       <h2>Deck B</h2>
@@ -65,7 +103,44 @@ export default function App() {
         }
       />
       <button onClick={() => deckBRef.current.seek(0)}>Restart</button>
+      
+      <div>
+        <label>Low</label>
+        <input
+          type="range"
+          min="-30"
+          max="10"
+          step="0.5"
+          defaultValue="0"
+          onChange={(e) =>
+            deckARef.current.setLow(Number(e.target.value))
+          }
+        />
 
+        <label>Mid</label>
+        <input
+          type="range"
+          min="-30"
+          max="10"
+          step="0.5"
+          defaultValue="0"
+          onChange={(e) =>
+            deckARef.current.setMid(Number(e.target.value))
+          }
+        />
+
+        <label>High</label>
+        <input
+          type="range"
+          min="-30"
+          max="10"
+          step="0.5"
+          defaultValue="0"
+          onChange={(e) =>
+            deckARef.current.setHigh(Number(e.target.value))
+          }
+        />
+      </div>
       <hr />
 
       <h2>Crossfader</h2>
