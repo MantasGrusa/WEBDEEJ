@@ -80,7 +80,17 @@ export default function App() {
           }
         />
       </div>
-
+      <input
+        type="range"
+        min="0.8"
+        max="1.2"
+        step="0.01"
+        defaultValue="1"
+        onChange={(e) =>
+          deckARef.current.setPlaybackRate(Number(e.target.value))
+        }
+      />
+    
       <hr />
 
       <h2>Deck B</h2>
